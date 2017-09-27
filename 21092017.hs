@@ -76,10 +76,5 @@ datasIguais (x:xs) dia | a == dia = b : datasIguais xs dia
                        | otherwise = datasIguais xs dia
   where (a, b) = x
 
-imprimeMesAPartir :: DiaSemana -> Int -> [(Int, DiaSemana)]
-imprimeMesAPartir dia 30 = [(30, dia)]
-imprimeMesAPartir dia init | dia == Sabado = (init, dia) : imprimeMesAPartir Domingo (init + 1)
-                           | otherwise = (init, dia) : imprimeMesAPartir (succ dia) (init + 1)
-
 imprimeMes :: DiaSemana -> [(Int, DiaSemana)]
-imprimeMes dia = imprimeMesAPartir dia 1
+imprimeMes dia = zip [1..30] ([dia .. Sabado] ++ (cycle [Domingo .. Sabado]))
