@@ -1,7 +1,6 @@
 -- ==================================
-fat :: Int -> [Int]
-fat 1 = [1]
-fat n = (fat (n - 1)) ++ [n * (last (fat (n - 1)))]
+fat :: Integer -> [Integer]
+fat n = [product([1..x]) | x <- [1..n]]
 
 -- ==================================
 testaListaRecursao :: (a -> Bool) -> [a] -> Bool
@@ -12,4 +11,12 @@ testaListaMap :: (a -> Bool) -> [a] -> Bool
 testaListaMap f l = and(map f l)
 
 testaListaFold :: (a -> Bool) -> [a] -> Bool
-testaListaFold f l = foldr (\a b -> f a && b) True l 
+testaListaFold f l = foldr (\a b -> f a && b) True l
+
+-- ==================================
+type Nome = String
+type Conteudo = String
+
+data Arquivo = ArqSimples | Diretorio
+  deriving(Eq, Show)
+
