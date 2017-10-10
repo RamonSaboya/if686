@@ -8,9 +8,12 @@ public class Main {
 		Scanner in = new Scanner(System.in);
 
 		int n, x, l;
-
+		
 		n = 10000;
 		x = 150;
+
+//		n = in.nextInt();
+//		x = in.nextInt();
 
 		final boolean notPrime[] = new boolean[n + 1];
 
@@ -18,39 +21,46 @@ public class Main {
 
 		l = (int) Math.sqrt(n);
 
-		if (x >= (l - 1)) {
-			List<Thread> threads = new ArrayList<Thread>();
+		List<Thread> threads = new ArrayList<Thread>();
 
-			System.out.println(l);
-			for (int i = 2; i <= l; i++) {
-				if (!isPrimeLazy(i)) {
-					continue;
-				}
-
-				final int multiplier = i;
-
-				threads.add(new Thread(() -> {
-					System.out.println("MUltiplos de " + multiplier);
-					for (int c = multiplier * 2; c <= n; c += multiplier) {
-						notPrime[c] = true;
-					}
-				}));
-
-				threads.get(threads.size() - 1).start();
+		for (int i = 2; i <= l; i++) {
+			if (!isPrimeLazy(i)) {
+				continue;
 			}
-
-			for (int i = 0; i < threads.size(); i++) {
+			
+			while(x == 0) {
 				try {
-					threads.get(i).join();
+					threads.get(threads.size() - 1).join();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				threads.remove(threads.size() - 1);
+				x++;
 			}
 
-			for (int i = 1; i <= n; i++) {
-				if (!notPrime[i]) {
-					System.out.println(i);
+			final int multiplier = i;
+			
+			--x;
+			threads.add(new Thread(() -> {
+				for (int c = multiplier * 2; c <= n; c += multiplier) {
+					notPrime[c] = true;
 				}
+			}));
+
+			threads.get(threads.size() - 1).start();
+		}
+
+		for (int i = 0; i < threads.size(); i++) {
+			try {
+				threads.get(i).join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		for (int i = 1; i <= n; i++) {
+			if (!notPrime[i]) {
+				System.out.println(i);
 			}
 		}
 	}
