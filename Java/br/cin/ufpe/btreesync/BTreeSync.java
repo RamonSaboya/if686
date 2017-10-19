@@ -1,3 +1,5 @@
+package br.cin.ufpe.btreesync;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -43,20 +45,20 @@ class BTree {
 
 }
 
-public class PLC {
+public class BTreeSync {
 
 	private static Random random = new Random();
 
 	public static void main(String[] args) {
 		Pair<Long, Integer> single = singleThread(2000);
 		System.out.println("============== SingleThread ==============");
-		System.out.printf("Tempo de execuÃ§Ã£o: %d%n", single.getKey());
-		System.out.printf("Tamanho da Ã¡rvore: %d%n", single.getValue());
+		System.out.printf("Tempo de execução: %d%n", single.getKey());
+		System.out.printf("Tamanho da árvore: %d%n", single.getValue());
 
 		Pair<Long, Integer> multi = multiThread(100, 2000);
 		System.out.println("============== MultiThread ==============");
-		System.out.printf("Tempo de execuÃ§Ã£o: %d%n", multi.getKey());
-		System.out.printf("Tamanho da Ã¡rvore: %d%n", multi.getValue());
+		System.out.printf("Tempo de execução: %d%n", multi.getKey());
+		System.out.printf("Tamanho da árvore: %d%n", multi.getValue());
 	}
 
 	private static Pair<Long, Integer> singleThread(int values) {

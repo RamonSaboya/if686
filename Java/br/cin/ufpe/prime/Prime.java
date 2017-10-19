@@ -1,19 +1,22 @@
+package br.cin.ufpe.prime;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Prime {
 
 	public static void main(String[] args) {
+		@SuppressWarnings({ "unused", "resource" })
 		Scanner in = new Scanner(System.in);
 
 		int n, x, l;
-		
+
 		n = 10000;
 		x = 150;
 
-//		n = in.nextInt();
-//		x = in.nextInt();
+		// n = in.nextInt();
+		// x = in.nextInt();
 
 		final boolean notPrime[] = new boolean[n + 1];
 
@@ -27,8 +30,8 @@ public class Main {
 			if (!isPrimeLazy(i)) {
 				continue;
 			}
-			
-			while(x == 0) {
+
+			while (x == 0) {
 				try {
 					threads.get(threads.size() - 1).join();
 				} catch (InterruptedException e) {
@@ -39,7 +42,7 @@ public class Main {
 			}
 
 			final int multiplier = i;
-			
+
 			--x;
 			threads.add(new Thread(() -> {
 				for (int c = multiplier * 2; c <= n; c += multiplier) {
